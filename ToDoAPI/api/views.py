@@ -17,14 +17,21 @@ class CustomAuthSession(SessionAuthentication):
         return None
 
 
-class TaskListView(generics.GenericAPIView, mixins.ListModelMixin):
+class TaskListView(generics.GenericAPIView, mixins.CreateModelMixin):
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
-    authentication_classes = [CustomAuthSession]
     permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request):
-        return self.list(request)
+        queryset = Task.objects.all()
+        serializer = TaskSerializer(queryset, many=True)
+        return Response(serializer.data)
 
     def post(self, request):
-        return Response({'status': 'ok'})
+        return self.create(request)
+
+    def perform_create(self, serializer):
+        if self.request.user.is_authenticated:
+            serializer.save(author=self.request.user)
+        else:
+            serializer.save()

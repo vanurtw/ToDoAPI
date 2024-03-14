@@ -11,7 +11,7 @@ class Task(models.Model):
     completed = models.BooleanField(default=False, verbose_name='Выполнена')
     data_create = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
     data_update = models.DateTimeField(auto_now=True, verbose_name='Дата обновления')
-    author = models.ForeignKey(get_user_model(), verbose_name='Пользователь', on_delete=models.CASCADE)
+    author = models.ForeignKey(get_user_model(), verbose_name='Пользователь', on_delete=models.CASCADE, blank=True, null=True)
 
     class Meta:
         ordering = ['data_create']

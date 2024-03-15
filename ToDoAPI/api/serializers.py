@@ -4,8 +4,8 @@ from django.contrib.auth.models import User
 
 
 class TaskSerializer(serializers.Serializer):
-    title = serializers.CharField(max_length=255, read_only=True)
-    content = serializers.CharField(read_only=True)
+    title = serializers.CharField(max_length=255)
+    content = serializers.CharField()
     completed = serializers.BooleanField(default=False)
     data_create = serializers.DateTimeField(read_only=True)
     data_update = serializers.DateTimeField(read_only=True)

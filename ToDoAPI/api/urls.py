@@ -6,6 +6,6 @@ urlpatterns = [
     path('task-update/<int:pk>/', views.TaskListView.as_view()),
     path('user-auth/', include('rest_framework.urls')),
     path('user-register/', views.UserRegister.as_view()),
-    path('task-delete/<int:pk>/', )
+    path('task-detail/<int:pk>/', views.TaskDetail.as_view()),
 
 ]

@@ -9,6 +9,8 @@ from rest_framework.authentication import SessionAuthentication
 from .models import Task
 from rest_framework.urls import urlpatterns
 
+from .authenticate import CustomAuthenticate
+
 
 # Create your views here.
 
@@ -48,11 +50,12 @@ class UserRegister(APIView):
 
 class TaskDetail(generics.GenericAPIView):
     serializer_class = TaskSerializer
+
     def get(self, request, pk):
         try:
             task = Task.objects.get(pk=pk)
         except:
-            return Response({'error':'no task'})
+            return Response({'error': 'no task'})
         serializer = TaskSerializer(task)
         return Response(serializer.data)
 
@@ -70,3 +73,13 @@ class TaskDetail(generics.GenericAPIView):
             return Response({'error': 'no task'})
         instance.delete()
         return Response({'status': f'task {pk} delete'})
+
+
+class LoginViewAPI(generics.GenericAPIView):
+    serializer_class = UserSerializers
+    authentication_classes = [CustomAuthenticate]
+
+    def post(self, request):
+        return Response({'status': 'ok'})
+
+

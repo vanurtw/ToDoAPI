@@ -58,3 +58,10 @@ class UserRegister(APIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
+
+
+class DeleteTask(APIView):
+    def get(self, request, pk):
+        task = Task.objects.get(pk=pk)
+        task.delete()
+        return Response({'status': 'task delete'})
